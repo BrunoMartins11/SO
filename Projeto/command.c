@@ -49,8 +49,13 @@ void set_command_comment(COMMAND cm, char* comment){
 }
 
 void free_command(COMMAND cm){
+	if(cm){
+	if(cm->input)
 	free(cm->input);
+	if(cm->output)
 	free(cm->output);
+	if(cm->comment)
 	free(cm->comment);
 	free(cm);
+	}
 }

@@ -30,7 +30,10 @@ COMMAND get_command(LIST l){
 void free_list(LIST list){
 	
 	while(list){
-		free(list);
+		free_command(list->command);
+		LIST fr=list;
 		list=list->next;
+		free(fr);
+		
 	}
 }

@@ -23,6 +23,7 @@ int main(int argc, char const *argv[]){
 	while((buff=readln(f))){
 		if(strcmp(">>>\n",buff)==0){
 			do{
+				 free(buff);
 				 buff=readln(f);
 			}while(strcmp("<<<\n",buff));
 		}else{
@@ -30,6 +31,7 @@ int main(int argc, char const *argv[]){
 			cm = parser(buff);
 			list = add_node(list,cm);
 		}
+			free(buff);
 		
 	}
 
@@ -46,6 +48,7 @@ int main(int argc, char const *argv[]){
 	//f = creat(argv[2],0644);
 	write_file(list,1);
 	close(1);
-	
+	free_list(list);
+	free(buff);
 	return 0;
 }
