@@ -1,3 +1,8 @@
+#include <stdlib.h>
+#include <string.h>
+#include "command.h"
+#include "auxFuncs.h"
+
 struct command{
 	char* input;
 	char* output;
@@ -32,16 +37,20 @@ void set_command_input(COMMAND cm, char* input){
 }
 
 void set_command_output(COMMAND cm, char* output){
-	cm->output=str_dup(output);
+	cm->output= str_dup(output);
 }
 
 void set_command_comment(COMMAND cm, char* comment){
-	cm->comment= str_dup(comment);
+	if(!(cm->comment)) cm->comment = str_dup(comment);
+	else{
+		cm->comment = realloc(cm->comment,sizeof(char)*(strlen(cm->comment)+strlen(comment)));
+		cm->comment=  strcat(cm->comment,str_dup(comment));
+	}
 }
 
 void free_command(COMMAND cm){
-	free(input);
-	free(output);
-	free(comment);
+	free(cm->input);
+	free(cm->output);
+	free(cm->comment);
 	free(cm);
 }

@@ -1,17 +1,28 @@
+#include <stdlib.h>
+#include "command.h"
+#include "list.h"
+
+
 struct list{
 	COMMAND command;
-	*next;
+	LIST next;
 };
 
 LIST add_node(LIST list, COMMAND cm){
 	
-	if(!list) list = malloc(sizeof(struct list));
+	if(!list){
+		list = malloc(sizeof(struct list));
+		list->command = cm;
+		list->next = NULL;
+		return list;
+	}
 	LIST head = list;
 	
-	while(list)
+	while(list->next)
 		list = list->next;
-	list = cm;
-	list->next = NULL;
+	list->next = malloc(sizeof(struct list));
+	(list->next)->command = cm;
+	(list->next)->next = NULL;
 
 	return head;
 }
