@@ -3,14 +3,10 @@
 #include "command.h"
 #include "auxFuncs.h"
 
-struct command{
-	char* input;
-	char* output;
-	char* comment;
-};
+
 
 COMMAND make_command(char* input, char* output, char* comment){
-	
+
 	COMMAND cm = malloc(sizeof(struct command));
 	
 	cm->input = str_dup(input);
@@ -33,7 +29,11 @@ char* get_comment(COMMAND cm){
 }
 
 void set_command_input(COMMAND cm, char* input){
-	cm->input= str_dup(input);
+	if(!(cm->input)) cm->input = str_dup(input);
+	else{
+		cm->input= realloc(cm->input,sizeof(char)*(strlen(cm->input)+strlen(input)));
+		cm->input=  strcat(cm->input,str_dup(input));
+	}
 }
 
 void set_command_output(COMMAND cm, char* output){

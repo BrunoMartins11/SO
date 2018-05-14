@@ -28,22 +28,12 @@ char* readln(int fildes){
        return buf;
 }
 
-COMMAND parser(char* buff, COMMAND cm){ 
-
-    if(buff[0] == '$' ){
-      if(!cm)
+COMMAND parser(char* buff){
+  COMMAND cm=NULL; 
+    if(buff[0] == '$' )
         cm = make_command(buff,NULL,NULL);
-        else{ 
-          set_command_input(cm,buff); 
-          }
-    }
-    if(buff[0]!='$' && strcmp(buff,">>>")){
-        if(!cm)
+    if(buff[0]!='$' && strcmp(buff,">>>"))
         cm = make_command(NULL,NULL,buff);
-        else{ 
-          set_command_comment(cm,buff); 
-          } 
-    }
     
   return cm;
 }
@@ -56,4 +46,17 @@ char* str_dup (const char *s) {
     if (d == NULL) return NULL;       
     strcpy (d,s);                    
     return d;                       
+}
+
+void write_file(LIST list, int fd){
+
+  COMMAND cm;
+  
+  while(list){
+    cm = get_command(list);
+    if(get_comment(cm)) write(fd,get_comment(cm),strlen(get_comment(cm)));
+    if(get_input(cm)) write(fd,get_input(cm),strlen(get_input(cm)));
+    if(get_output(cm)) write(fd,get_output(cm),strlen(get_output(cm)));
+    list=list->next;
+  }  
 }

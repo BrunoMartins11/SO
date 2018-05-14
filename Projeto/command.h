@@ -2,7 +2,11 @@
 #define __COMMAND_H__
 
 typedef struct command* COMMAND;
-
+struct command{
+	char* input;
+	char* output;
+	char* comment;
+};
 COMMAND make_command(char* input, char* output, char* comment);
 char* get_input(COMMAND cm);
 char* get_output(COMMAND cm);

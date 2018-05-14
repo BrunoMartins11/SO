@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <unistd.h> 
 #include <fcntl.h> 
+#include <string.h>
 #include "command.h"
 #include "list.h"
 #include "auxFuncs.h"
@@ -20,10 +21,20 @@ int main(int argc, char const *argv[]){
 	LIST list=NULL;
 
 	while((buff=readln(f))){
-		if(buff[0]=='\n' && buff[1]=='\0') break;
-		cm = parser(buff,cm);
+		if(strcmp(">>>\n",buff)==0){
+			do{
+				 buff=readln(f);
+			}while(strcmp("<<<\n",buff));
+		}else{
+			if(buff[0]=='\n' && buff[1]=='\0') break;
+			cm = parser(buff);
+			list = add_node(list,cm);
+		}
+		
 	}
-	list = add_node(list,cm);
+
+
+
 
 	/*while(list!=NULL){
 		if(get_input(list->command)){
@@ -32,7 +43,9 @@ int main(int argc, char const *argv[]){
 	}
 */
 	close(f);
-	f = creat(argv[2],0644);
+	//f = creat(argv[2],0644);
+	write_file(list,1);
+	close(1);
 	
 	return 0;
 }

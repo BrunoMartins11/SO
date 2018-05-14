@@ -3,13 +3,9 @@
 #include "list.h"
 
 
-struct list{
-	COMMAND command;
-	LIST next;
-};
+
 
 LIST add_node(LIST list, COMMAND cm){
-	
 	if(!list){
 		list = malloc(sizeof(struct list));
 		list->command = cm;
@@ -25,6 +21,10 @@ LIST add_node(LIST list, COMMAND cm){
 	(list->next)->next = NULL;
 
 	return head;
+}
+
+COMMAND get_command(LIST l){
+	return l->command;
 }
 
 void free_list(LIST list){
