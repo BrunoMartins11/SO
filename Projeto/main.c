@@ -3,6 +3,7 @@
 #include <unistd.h> 
 #include <fcntl.h> 
 #include <string.h>
+#include <sys/wait.h>
 #include "command.h"
 #include "list.h"
 #include "auxFuncs.h"
@@ -15,6 +16,8 @@ int main(int argc, char const *argv[]){
 		return 1;
 	}
 	int f;
+	int pdi[2];
+	int pdo[2];
 	char* buff;
 	f=open(argv[1],O_RDONLY); 
 	COMMAND cm=NULL;
@@ -34,16 +37,40 @@ int main(int argc, char const *argv[]){
 			free(buff);
 		
 	}
-
-
-
-
-	/*while(list!=NULL){
-		if(get_input(list->command)){
-			exec
+	
+	int isFirst=1;	
+	while(list!=NULL){
+		char** token = NULL;
+		char* out;
+		if(list->command->input){
+			int j = fork();
+			token = strdivide(list->command->input);
+			pipe(pdi);
+			pipe(pdo);
+			if(j==0 && isFirst){
+				exec_command(token,NULL,pdo);
+			}else if(j==0){
+				exec_command(token,pdi,pdo);	
+			}
+			close(pdo[1]);
+			close(pdi[0]);
+			int n=1;
+			if(!isFirst){
+				write(pdi[1], out, strlen(out));
+			}
+			while(n>0){
+				char buffer[1024];
+				n=read(pdo[0], buffer, 1023);
+				buffer[n] = 0;
+				set_command_output(list->command,buffer);
+			}
+			wait(NULL);
+			isFirst=0;
+			out = list->command->output;
 		}
+		list = list->next;
 	}
-*/
+
 	close(f);
 	//f = creat(argv[2],0644);
 	write_file(list,1);

@@ -37,7 +37,12 @@ void set_command_input(COMMAND cm, char* input){
 }
 
 void set_command_output(COMMAND cm, char* output){
-	cm->output= str_dup(output);
+	if(!cm->output)
+		cm->output= str_dup(output);
+	else{
+		cm->output = realloc(cm->output, sizeof(char)*(strlen(cm->output)+strlen(output)));
+		strcat(cm->output, output);
+	}
 }
 
 void set_command_comment(COMMAND cm, char* comment){

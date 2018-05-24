@@ -60,3 +60,34 @@ void write_file(LIST list, int fd){
     list=list->next;
   }  
 }
+
+char** strdivide(char* str){
+  int n_spaces;
+  char** res = NULL;
+
+  n_spaces = 0;
+  for(char * p = strtok (str, " "); p; p = strtok (NULL, " ")) {
+    res = realloc (res, sizeof (char*) * (n_spaces+1));
+    res[n_spaces++] = p;
+  }
+  res[n_spaces-1] = strtok (res[n_spaces-1], "\n");
+  res = realloc (res, sizeof (char*) * (n_spaces+1));
+  res[n_spaces] = 0;
+return res;
+}
+
+void exec_command(char** token, int* ppi, int* ppo){
+
+    if(ppi!=NULL){
+        dup2(ppi[0],0);
+        close(ppi[0]);
+        close(ppi[1]);
+    }
+    dup2(ppo[1],1);
+    close(ppo[1]);
+    close(ppo[0]);
+
+    execvp(token[1],token+1);
+    _exit(1);
+}
+
