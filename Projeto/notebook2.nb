@@ -1,19 +1,47 @@
 Este comando lista os ficheiros:
 $ ls
 >>>
-coisa.c
-a.out
-batata.c
+auxFuncs.c
+auxFuncs.h
+auxFuncs.o
+command.c
+command.h
+command.o
+list.c
+list.h
+list.o
+main.c
+main.o
+makefile
+notebook0.nb
+notebook1.nb
+notebook2.nb
+notebook3.nb
+prog
 <<<
 Agora podemos ordenar estes ficheiros:
 $| shuf
 >>>
-a.out
-batata.c
-coisa.c
+notebook2.nb
+command.o
+list.c
+notebook0.nb
+notebook3.nb
+command.h
+makefile
+list.h
+list.o
+prog
+auxFuncs.o
+command.c
+auxFuncs.c
+main.o
+auxFuncs.h
+main.c
+notebook1.nb
 <<<
 E escolher o primeiro:
 $| head -1
 >>>
-a.out
+notebook2.nb
 <<<

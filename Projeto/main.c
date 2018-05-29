@@ -77,9 +77,9 @@ int main(int argc, char const *argv[]){
 	}
 
 	close(f);
-	//f = creat(argv[2],0644);
-	write_file(fim,2);
-	close(1);
+	f = creat(argv[1],0644);
+	write_file(fim,f);
+	close(f);
 	free_list(fim);
 	free(buff);
 	return 0;

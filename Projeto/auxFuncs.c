@@ -56,17 +56,23 @@ void write_file(LIST list, int fd){
     cm = get_command(list);
     if(get_comment(cm)) write(fd,get_comment(cm),strlen(get_comment(cm)));
     if(get_input(cm)) write(fd,get_input(cm),strlen(get_input(cm)));
-    if(get_output(cm)) write(fd,get_output(cm),strlen(get_output(cm)));
+    if(get_output(cm)){
+     write(fd,">>>\n",4);
+     write(fd,get_output(cm),strlen(get_output(cm)));
+     write(fd,"<<<\n",4);
+    }
     list=list->next;
   }  
 }
 
 char** strdivide(char* str){
+
+  char* s = str_dup(str);
   int n_spaces;
   char** res = NULL;
 
   n_spaces = 0;
-  for(char * p = strtok (str, " "); p; p = strtok (NULL, " ")) {
+  for(char * p = strtok (s, " "); p; p = strtok (NULL, " ")) {
     res = realloc (res, sizeof (char*) * (n_spaces+1));
     res[n_spaces++] = p;
   }
