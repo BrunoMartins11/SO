@@ -6,7 +6,7 @@ a.out
 batata.c
 <<<
 Agora podemos ordenar estes ficheiros:
-$| sort
+$| shuf
 >>>
 a.out
 batata.c

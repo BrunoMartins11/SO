@@ -86,7 +86,6 @@ void exec_command(char** token, int* ppi, int* ppo){
     dup2(ppo[1],1);
     close(ppo[1]);
     close(ppo[0]);
-
     execvp(token[1],token+1);
     _exit(1);
 }

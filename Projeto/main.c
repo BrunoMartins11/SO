@@ -37,17 +37,20 @@ int main(int argc, char const *argv[]){
 			free(buff);
 		
 	}
+	LIST fim = list;
 	
 	int isFirst=1;	
 	while(list!=NULL){
 		char** token = NULL;
 		char* out;
 		if(list->command->input){
-			int j = fork();
-			token = strdivide(list->command->input);
 			pipe(pdi);
 			pipe(pdo);
+			int j = fork();
+			token = strdivide(list->command->input);
 			if(j==0 && isFirst){
+				close(pdi[0]);
+				close(pdi[1]);
 				exec_command(token,NULL,pdo);
 			}else if(j==0){
 				exec_command(token,pdi,pdo);	
@@ -58,10 +61,12 @@ int main(int argc, char const *argv[]){
 			if(!isFirst){
 				write(pdi[1], out, strlen(out));
 			}
-			while(n>0){
+			close(pdi[1]);
+			while(n != 0){
 				char buffer[1024];
 				n=read(pdo[0], buffer, 1023);
 				buffer[n] = 0;
+				if(n==0) break;
 				set_command_output(list->command,buffer);
 			}
 			wait(NULL);
@@ -73,9 +78,9 @@ int main(int argc, char const *argv[]){
 
 	close(f);
 	//f = creat(argv[2],0644);
-	write_file(list,1);
+	write_file(fim,2);
 	close(1);
-	free_list(list);
+	free_list(fim);
 	free(buff);
 	return 0;
 }
