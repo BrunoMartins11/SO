@@ -22,26 +22,26 @@ prog
 Agora podemos ordenar estes ficheiros:
 $| shuf
 >>>
+auxFuncs.c
+notebook1.nb
+prog
 notebook2.nb
-command.o
+list.o
 list.c
-notebook0.nb
+auxFuncs.h
 notebook3.nb
-command.h
+main.o
+main.c
+auxFuncs.o
 makefile
 list.h
-list.o
-prog
-auxFuncs.o
+command.o
 command.c
-auxFuncs.c
-main.o
-auxFuncs.h
-main.c
-notebook1.nb
+notebook0.nb
+command.h
 <<<
 E escolher o primeiro:
 $| head -1
 >>>
-notebook2.nb
+auxFuncs.c
 <<<

@@ -1,0 +1,150 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University Assignment Title Page 
+% LaTeX Template
+% Version 1.0 (27/12/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% WikiBooks (http://en.wikibooks.org/wiki/LaTeX/Title_Creation)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% 
+% Instructions for using this template:
+% This title page is capable of being compiled as is. This is not useful for 
+% including it in another document. To do this, you have two options: 
+%
+% 1) Copy/paste everything between \begin{document} and \end{document} 
+% starting at \begin{titlepage} and paste this into another LaTeX file where you 
+% want your title page.
+% OR
+% 2) Remove everything outside the \begin{titlepage} and \end{titlepage} and 
+% move this file to the same directory as the LaTeX file you wish to add it to. 
+% Then add \input{./title_page_1.tex} to your LaTeX file where you want your
+% title page.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\title{Title page with logo}
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[12pt]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[labelformat=empty]{caption}
+
+\begin{document}
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+
+\textbf{\textsc{\LARGE Universidade do Minho}}\\[1.5cm] % Name of your university/college
+\textsc{\Large Mestrado Integrado em Engenharia Informática}\\[0.5cm] % Major heading such as course name
+\textsc{\large Programação orientada a objetos}\\[0.5cm] % Minor heading such as course title
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \huge \bfseries Java Fatura}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushleft} \large
+%\emph{Authors:}\\
+%Bruno Martins A.....
+%Leonardo Neri A.....
+%Márcio Sousa  A82400 % Your name
+%\end{flushleft}
+%\end{minipage}
+%~
+%\begin{minipage}{0.4\textwidth}
+%\begin{flushright} \large
+%\emph{Supervisor:} \\
+%Dr. James \textsc{Smith} % Supervisor's Name
+%\end{flushright}
+%\end{minipage}\\[2cm]
+
+% If you don't want a supervisor, uncomment the two lines below and remove the section above
+\Large \emph{Membros do Grupo 66}\\
+Bruno Martins A80410
+Leonardo Neri A80056
+Márcio Sousa A82400
+%----------------------------------------------------------------------------------------
+%	DATE SECTION
+%----------------------------------------------------------------------------------------
+
+
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+%\includegraphics{logo.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+ 
+%----------------------------------------------------------------------------------------
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+\section{Introdução}
+Este projeto teve como objetivo criar um progrma em na linguagem de programação C que permitisse o processamento de \textbf{\textit{notebooks}}. Um \textbf{\textit{notebook}} é um ficheiro de texto que contém comentarios e comandos e que depois do seu processamento também contém o resultado dos comandos.
+O conteúdo do ficheiro, como referido anteriormente, contém um comando, que começa obrigatoriamente com o símbolo \textit{\$}, e o seu output está delimitado entre \textit{>>> <<<}.  
+
+\section{Estruturas de Dados}
+
+
+
+\subsection{COMMAND}
+
+Para o armazenamento do conteúdo dos \textbf{\textit{notebooks}} foi criada uma estrutura \textit{COMMAND} que contém três campos. Uma \textit{String} \textit{\textit{input}} que contém o comando a executar, uma \textit{String} \textit{\textit{output}} que contém o output do comando e uma \textit{String} \textit{\textit{comment}} que contém o comentário que está imediatamente antes de comando. 
+
+\subsection{LIST}
+
+Para assegurar uma coneção entre todas as células \textit{COMMAND} foi utilizada uma lista ligada. Esta lista está ordenada tendo em conta a organização do \textit{\textit{notebook}} a ser processado.
+
+
+\section{Execução}
+
+\subsection{Leitura e parsing do ficheiro}
+A execução do programa começa pela abertura do ficheiro passado como argumento com a \textit{system call} \textit{\textit{open}}, de seguida é lido o texto que lá está dentro linha a linha, um caracter de cada vez usando o \textit{\textit{read}}. Logo após ser finalizada a leitura da linha, o conteúdo dela é processada por uma função de \textit{parsing} que verifica se é um comando, um comentário ou um output e insere no campo designado da estrutura \textit{COMMAND}.
+
+\subsection{Empresa}
+\begin{itemize}
+\item \textbf{\underline{Obter as faturas da empresa ordenadas por data ou valor:}} o procedimento é o mesmo que o que permite aos contribuintes verem todas as faturas emitidas em seu nome, mas desta vez, aplicado a uma empresa. Depois de ter a lista das faturas, esta é ordenada pela ordem desejada.
+\item \textbf{\underline{Obter a lista de faturas por contribuinte num intervalo de datas:}} as faturas da empresa em questão são filtradas de acordo com o NIF cliente, e depois por data, sendo retornadas a lista de faturas que corresponde a esses dois critérios.
+\item \textbf{\underline{Obter a lista de faturas por contribuinte ordenadas por valor de despesa:}} as faturas da empresa em questão sao filtradas por NIF do contribuinte, e é retornada a lista de Faturas ordenada por valor decrescente de despesa, recorrendo a um comparator.
+\item \textbf{\underline{Total faturado por uma empresa:}} é percorrida a lista das faturas da empresa, somando o valor das faturas que estão dentro do perído de tempo estipulado, sendo retornado o valor total.
+\end{itemize}
+
+\subsection{Admin}
+\begin{itemize}
+\item \textbf{\underline{Relação 10 contribuintes que mais gastam:}} é percorrido o HashMap que contém todas as identidades fiscais e são filtrados todos os contribuintes individuais para uma lista que é ordenada segundo os gastos de cada um deles. No final são mantidos apenas na lista os primeiros dez contribuintes.
+
+\item \textbf{\underline{Relação 10 empresas que mais faturam:}} é percorrido o HashMap que contém todas as identidades fiscais e são filtradas todas as Empresas para uma lista que é ordenada segundo o total faturado de cada um deles. No final mantemos apenas na lista os primeiros dez contribuintes
+\end{itemize}
+
+
+
+\section{Conclusão}
+Este projeto foi uma excelente oportunidade para aplicar conhecimentos relativos ao paradigma de programação orientada a objetos, usando Java como linguagem de desenvolvimento do projeto. Relativamente a possíveis aspetos a melhorar no projeto, salienta-se que poderia ter sido usado um algoritmo de cálculo de dedução mais específico, e uma lista de concelhos que abrangesse todos os concelhos do país.
+
+\end{document}
