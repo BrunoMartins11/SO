@@ -59,7 +59,8 @@
 %----------------------------------------------------------------------------------------
 
 \HRule \\[0.4cm]
-{ \huge \bfseries Processamento de Notebooks}\\[0.4cm] % Title of your document
+{ \huge \bfseries Processamento de Notebooks}\\[0.4cm]
+\Large \emph{2 de junho de 2018} % Title of your document
 \HRule \\[1.5cm]
  
 %----------------------------------------------------------------------------------------
@@ -136,9 +137,9 @@ Visto que a estrutura em que está guardado o ficheiro e os outputs dos comandos
 
 \section{Controlo de Erros}
 
-O controlo de erros neste programa é baixo. No entanto têm de ser considerados alguns cenários que possam ocorrer. Numa primeira instância pode não ser passado nenhum argumento ao programa bem como mais que um, nesse caso o programa é interrompido. Outro caso possível é, a executar um comando cujo input seja o output de um \textit{N} comando anterior, o número seja maior que o número de comandos já executados logo não pode ser executado esse comando tendo o programa de terminar.
+Quanto ao controlo de erros neste programa têm de ser considerados alguns cenários que possam ocorrer. Numa primeira instância pode não ser passado nenhum argumento ao programa bem como mais que um, nesse caso o programa é interrompido. Outro caso possível é, a executar um comando cujo input seja o output de um \textit{N} comando anterior, o número seja maior que o número de comandos já executados logo não pode ser executado esse comando tendo o programa de terminar. Erros de leitura e/ou escrita em ficheiros foram também tidos em conta bem como na alocação de memória para as estruturas. Na criação de pipes é verificado se estes são gerados sem erros e aquando da chamada da função \textit{fork} também ela sofre controlo de erros.
 
 \section{Conclusão}
-Este projeto foi uma excelente oportunidade para aplicar conhecimentos relativos ao paradigma de programação orientada a objetos, usando Java como linguagem de desenvolvimento do projeto. Relativamente a possíveis aspetos a melhorar no projeto, salienta-se que poderia ter sido usado um algoritmo de cálculo de dedução mais específico, e uma lista de concelhos que abrangesse todos os concelhos do país.
+Este projeto foi uma excelente oportunidade para aplicar conhecimentos relativos a Sistemas Operativos, tendo desta forma ficado mais vincado como e o porquê de um sistema operativo executar processos de forma eficiente. Quanto a melhoramentos possíveis ao programa acima descrito poderia ser melhorado através da execução concorrente de comandos. Esta arquitetura necessitaria no entanto de outro tipo de cuidados tal como a verificação de dependências de execução (um comando para executar necessitar do output de um comando que ainda não foi executado). Contudo, na opinião dos integrantes do grupo, os objetivos do trabalho foram atingidos pois todas as funcionalidades do programa executavam em conformidade com o requerido. 
 
 \end{document}

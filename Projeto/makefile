@@ -1,6 +1,6 @@
 CFLAGS=-Wall -Wextra -pedantic -O2 -g -std=c99 
 OBJS=$(patsubst %.c, %.o, $(wildcard *.c))
-EXEC=prog
+EXEC=notebook
 
 instalar: $(OBJS)
 	$(CC) $(CFLAGS) -o $(EXEC) $(OBJS)

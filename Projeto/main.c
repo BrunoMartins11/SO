@@ -15,6 +15,8 @@ int main(int argc, char const *argv[]){
 	int pdi[2];
 	int pdo[2];
 	char* buff;
+	char** token = NULL;
+	char* out;
 
 	if(argc!=2){
 		perror("Missing notebook file.\n");
@@ -54,8 +56,7 @@ int main(int argc, char const *argv[]){
 	int isFirst=1;	
 
 	while(list!=NULL){
-		char** token = NULL;
-		char* out;
+		
 		int j;
 		
 		if(list->command->input){
@@ -122,15 +123,17 @@ int main(int argc, char const *argv[]){
 	}
 
 	close(f);
-	
+	/*
 	if ((f = creat(argv[1],0644)) == -1){
 		perror("Error creating file\n");
 		_exit(-1);
 	}
-	
-	write_file(fim,f);
-	close(f);
+	*/
+	write_file(fim,1);
+	//close(f);
 	free_list(fim);
+	free(buff);
+	free(out);
 	free(buff);
 	return 0;
 }
