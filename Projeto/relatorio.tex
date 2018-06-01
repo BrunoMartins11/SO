@@ -52,14 +52,14 @@
 
 \textbf{\textsc{\LARGE Universidade do Minho}}\\[1.5cm] % Name of your university/college
 \textsc{\Large Mestrado Integrado em Engenharia Informática}\\[0.5cm] % Major heading such as course name
-\textsc{\large Programação orientada a objetos}\\[0.5cm] % Minor heading such as course title
+\textsc{\large Sistemas Operativos}\\[0.8cm] % Minor heading such as course title
 
 %----------------------------------------------------------------------------------------
 %	TITLE SECTION
 %----------------------------------------------------------------------------------------
 
 \HRule \\[0.4cm]
-{ \huge \bfseries Java Fatura}\\[0.4cm] % Title of your document
+{ \huge \bfseries Processamento de Notebooks}\\[0.4cm] % Title of your document
 \HRule \\[1.5cm]
  
 %----------------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ Márcio Sousa A82400
 
 \section{Introdução}
 Este projeto teve como objetivo criar um progrma em na linguagem de programação C que permitisse o processamento de \textbf{\textit{notebooks}}. Um \textbf{\textit{notebook}} é um ficheiro de texto que contém comentarios e comandos e que depois do seu processamento também contém o resultado dos comandos.
-O conteúdo do ficheiro, como referido anteriormente, contém um comando, que começa obrigatoriamente com o símbolo \textit{\$}, e o seu output está delimitado entre \textit{>>> <<<}.  
+O conteúdo do ficheiro, como referido anteriormente, contém um comando, que começa obrigatoriamente com o símbolo \textit{\$}, e o seu output está delimitado entre \textit{>>> <<<}. O \textbf{\textit{notebook}} também poderá ter nalguns casos um número logo após o símbolo \textit{\$} referente ao output do \textit{n} comando anterior que deverá ser um argumento do proximo comando a ser executado. 
 
 \section{Estruturas de Dados}
 
@@ -115,7 +115,7 @@ O conteúdo do ficheiro, como referido anteriormente, contém um comando, que co
 
 \subsection{COMMAND}
 
-Para o armazenamento do conteúdo dos \textbf{\textit{notebooks}} foi criada uma estrutura \textit{COMMAND} que contém três campos. Uma \textit{String} \textit{\textit{input}} que contém o comando a executar, uma \textit{String} \textit{\textit{output}} que contém o output do comando e uma \textit{String} \textit{\textit{comment}} que contém o comentário que está imediatamente antes de comando. 
+Para o armazenamento do conteúdo dos \textbf{\textit{notebooks}} foi criada uma estrutura \textit{COMMAND} que contém quatro campos. Uma \textit{String} \textit{\textit{input}} que contém o comando a executar, uma \textit{String} \textit{\textit{output}} que contém o output do comando, uma \textit{String} \textit{\textit{comment}} que contém o comentário que está imediatamente antes de comando, e um \textit{inteiro} que se refere ao número do output anterior que deve ser utilizado como \textit{input} no comando atual. 
 
 \subsection{LIST}
 
@@ -125,24 +125,18 @@ Para assegurar uma coneção entre todas as células \textit{COMMAND} foi utiliz
 \section{Execução}
 
 \subsection{Leitura e parsing do ficheiro}
-A execução do programa começa pela abertura do ficheiro passado como argumento com a \textit{system call} \textit{\textit{open}}, de seguida é lido o texto que lá está dentro linha a linha, um caracter de cada vez usando o \textit{\textit{read}}. Logo após ser finalizada a leitura da linha, o conteúdo dela é processada por uma função de \textit{parsing} que verifica se é um comando, um comentário ou um output e insere no campo designado da estrutura \textit{COMMAND}.
+A execução do programa começa pela abertura do ficheiro passado como argumento com a \textit{system call} \textit{\textit{open}}, de seguida é lido o texto que lá está dentro linha a linha, um caracter de cada vez usando o \textit{\textit{read}}. Logo após ser finalizada a leitura da linha, o conteúdo dela é processada por uma função de \textit{parsing} que verifica se é um comando, um comentário, um  output e também o \textit{inteiro} a seguir ao \textit{\$} e insere no campo designado da estrutura \textit{COMMAND}.
 
-\subsection{Empresa}
-\begin{itemize}
-\item \textbf{\underline{Obter as faturas da empresa ordenadas por data ou valor:}} o procedimento é o mesmo que o que permite aos contribuintes verem todas as faturas emitidas em seu nome, mas desta vez, aplicado a uma empresa. Depois de ter a lista das faturas, esta é ordenada pela ordem desejada.
-\item \textbf{\underline{Obter a lista de faturas por contribuinte num intervalo de datas:}} as faturas da empresa em questão são filtradas de acordo com o NIF cliente, e depois por data, sendo retornadas a lista de faturas que corresponde a esses dois critérios.
-\item \textbf{\underline{Obter a lista de faturas por contribuinte ordenadas por valor de despesa:}} as faturas da empresa em questão sao filtradas por NIF do contribuinte, e é retornada a lista de Faturas ordenada por valor decrescente de despesa, recorrendo a um comparator.
-\item \textbf{\underline{Total faturado por uma empresa:}} é percorrida a lista das faturas da empresa, somando o valor das faturas que estão dentro do perído de tempo estipulado, sendo retornado o valor total.
-\end{itemize}
-
-\subsection{Admin}
-\begin{itemize}
-\item \textbf{\underline{Relação 10 contribuintes que mais gastam:}} é percorrido o HashMap que contém todas as identidades fiscais e são filtrados todos os contribuintes individuais para uma lista que é ordenada segundo os gastos de cada um deles. No final são mantidos apenas na lista os primeiros dez contribuintes.
-
-\item \textbf{\underline{Relação 10 empresas que mais faturam:}} é percorrido o HashMap que contém todas as identidades fiscais e são filtradas todas as Empresas para uma lista que é ordenada segundo o total faturado de cada um deles. No final mantemos apenas na lista os primeiros dez contribuintes
-\end{itemize}
+\subsection{Execução de Comandos}
+No que toca à execução dos comandos propriamente dita, o programa cria dois pipes para que na criação de um processo filho que executa os comandos, este possa comunicar com o processo pai de forma a redirecionar inputs e outputs. Seguidamente é feito um \textit{\textit{fork}} que cria um processo filho e onde os comandos são executados usando \textit{\textit{execvp}}. Os outputs do comando sao redirecionados para um pipe anteriormente criado e guardados na respetiva posição da estrutura. Na eventualidade de um comando necessitar de um output que nao seja o imediatamente anterior a ele, é encontrado esse output e escrito no \textit{file descriptor} de onde o processo vai ler os argumentos para execução. Finalmente no fim de todo este processo os resultados sao guardados na estrutura.
 
 
+\subsection{Escrita no ficheiro}
+Visto que a estrutura em que está guardado o ficheiro e os outputs dos comandos dentro dele está ordenada segundo a organização do ficheiro, a escrita no ficheiro é feita utilizando a função \textit{\textit{creat}}, criando assim um ficheiro novo igual ao inicialmente passado mas agora sem conteúdo, são percorridos todos os elementos da estrutura \textit{LIST} criada e escritas todas as conponentes dessa estrutura.
+
+\section{Controlo de Erros}
+
+O controlo de erros neste programa é baixo. No entanto têm de ser considerados alguns cenários que possam ocorrer. Numa primeira instância pode não ser passado nenhum argumento ao programa bem como mais que um, nesse caso o programa é interrompido. Outro caso possível é, a executar um comando cujo input seja o output de um \textit{N} comando anterior, o número seja maior que o número de comandos já executados logo não pode ser executado esse comando tendo o programa de terminar.
 
 \section{Conclusão}
 Este projeto foi uma excelente oportunidade para aplicar conhecimentos relativos ao paradigma de programação orientada a objetos, usando Java como linguagem de desenvolvimento do projeto. Relativamente a possíveis aspetos a melhorar no projeto, salienta-se que poderia ter sido usado um algoritmo de cálculo de dedução mais específico, e uma lista de concelhos que abrangesse todos os concelhos do país.
