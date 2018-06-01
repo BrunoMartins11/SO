@@ -11,7 +11,7 @@ LIST add_node(LIST list, COMMAND cm){
 	if(!list){
 		
 		if ((list = malloc(sizeof(struct list))) == NULL){
-			perror("Memory allocation failed");
+			perror("Memory allocation failed\n");
 			_exit(-1);
 
 		}
@@ -27,7 +27,7 @@ LIST add_node(LIST list, COMMAND cm){
 		list = list->next;
 	
 	if ((list->next = malloc(sizeof(struct list))) == NULL){
-		perror("Memory allocation failed");
+		perror("Memory allocation failed\n");
 		_exit(-1);
 	}
 

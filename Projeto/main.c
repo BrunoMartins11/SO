@@ -16,13 +16,13 @@ int main(int argc, char const *argv[]){
 	int pdo[2];
 	char* buff;
 
-	if(argc<2){
+	if(argc!=2){
 		perror("Missing notebook file.\n");
 		return -1;
 	}
 	
 	if ((f=open(argv[1],O_RDONLY)) == -1){
-		perror("Error opening file");
+		perror("Error opening file\n");
 		exit(-1);
 	}
 
@@ -60,17 +60,17 @@ int main(int argc, char const *argv[]){
 		
 		if(list->command->input){
 			if (pipe(pdi) == -1){
-				perror("Pipe failed");
+				perror("Pipe failed\n");
 				_exit(-1);
 			}
 
 			if (pipe(pdo) == -1){
-				perror("Pipe failed");
+				perror("Pipe failed\n");
 				_exit(-1);
 			}
 
 			if ((j = fork()) == -1){
-				perror("Error creating new proccess");
+				perror("Error creating new proccess\n");
 				_exit(-1);
 			}
 
@@ -92,7 +92,7 @@ int main(int argc, char const *argv[]){
 			
 			if(!isFirst){
 				if (write(pdi[1], out, strlen(out)) == -1){
-					perror("Writing error");
+					perror("Writing error\n");
 					_exit(-1);
 				}
 			}
@@ -103,7 +103,7 @@ int main(int argc, char const *argv[]){
 				char buffer[1024];
 				
 				if ((n=read(pdo[0], buffer, 1023)) == -1){
-					perror("Error reading from file");
+					perror("Error reading from file\n");
 					_exit(-1);
 				}
 
@@ -124,7 +124,7 @@ int main(int argc, char const *argv[]){
 	close(f);
 	
 	if ((f = creat(argv[1],0644)) == -1){
-		perror("Error creating file");
+		perror("Error creating file\n");
 		_exit(-1);
 	}
 	

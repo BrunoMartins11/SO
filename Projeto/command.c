@@ -11,7 +11,7 @@ COMMAND make_command(char* input, char* output, char* comment){
 
 	COMMAND cm;
 	if ((cm = malloc(sizeof(struct command))) == NULL){
-		perror("Memory allocation failed");
+		perror("Memory allocation failed\n");
 		_exit(-1);
 	}
 	
@@ -41,7 +41,7 @@ void set_command_input(COMMAND cm, char* input){
 	else{
 		
 		if ((cm->input= realloc(cm->input,sizeof(char)*(strlen(cm->input)+strlen(input)))) == NULL){
-			perror("Memory reallocation failed");
+			perror("Memory reallocation failed\n");
 			_exit(-1);
 		}
 
@@ -56,7 +56,7 @@ void set_command_output(COMMAND cm, char* output){
 	else{
 		
 		if ((cm->output = realloc(cm->output, sizeof(char)*(strlen(cm->output)+strlen(output)))) == NULL){
-			perror("Memory reallocation failed");
+			perror("Memory reallocation failed\n");
 			_exit(-1);
 		}
 
@@ -71,7 +71,7 @@ void set_command_comment(COMMAND cm, char* comment){
 	else{
 		
 		if ((cm->comment = realloc(cm->comment,sizeof(char)*(strlen(cm->comment)+strlen(comment)))) == NULL){
-			perror("Memory reallocation failed");
+			perror("Memory reallocation failed\n");
 			_exit(-1);
 		}
 
