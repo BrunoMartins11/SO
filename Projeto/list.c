@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "command.h"
 #include "list.h"
@@ -7,16 +8,28 @@
 
 LIST add_node(LIST list, COMMAND cm){
 	if(!list){
-		list = malloc(sizeof(struct list));
+		
+		if ((list = malloc(sizeof(struct list))) == NULL){
+			perror("Memory allocation failed");
+			exit(-1);
+
+		}
+
 		list->command = cm;
 		list->next = NULL;
 		return list;
 	}
+	
 	LIST head = list;
 	
 	while(list->next)
 		list = list->next;
-	list->next = malloc(sizeof(struct list));
+	
+	if ((list->next = malloc(sizeof(struct list))) == NULL){
+		perror("Memory allocation failed");
+		exit(-1);
+	}
+
 	(list->next)->command = cm;
 	(list->next)->next = NULL;
 

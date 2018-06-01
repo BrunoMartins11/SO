@@ -1,0 +1,4 @@
+$ cat list.c
+$| grep int
+$| sort
+$| head -1
