@@ -61,17 +61,17 @@ int main(int argc, char const *argv[]){
 		if(list->command->input){
 			if (pipe(pdi) == -1){
 				perror("Pipe failed");
-				exit(-1);
+				_exit(-1);
 			}
 
 			if (pipe(pdo) == -1){
 				perror("Pipe failed");
-				exit(-1);
+				_exit(-1);
 			}
 
 			if ((j = fork()) == -1){
 				perror("Error creating new proccess");
-				exit(-1);
+				_exit(-1);
 			}
 
 			token = strdivide(list->command->input);
@@ -93,7 +93,7 @@ int main(int argc, char const *argv[]){
 			if(!isFirst){
 				if (write(pdi[1], out, strlen(out)) == -1){
 					perror("Writing error");
-					exit(-1);
+					_exit(-1);
 				}
 			}
 
@@ -104,7 +104,7 @@ int main(int argc, char const *argv[]){
 				
 				if ((n=read(pdo[0], buffer, 1023)) == -1){
 					perror("Error reading from file");
-					exit(-1);
+					_exit(-1);
 				}
 
 				buffer[n] = 0;
@@ -125,7 +125,7 @@ int main(int argc, char const *argv[]){
 	
 	if ((f = creat(argv[1],0644)) == -1){
 		perror("Error creating file");
-		exit(-1);
+		_exit(-1);
 	}
 	
 	write_file(fim,f);
