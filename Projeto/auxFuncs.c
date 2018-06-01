@@ -16,7 +16,7 @@ char *readln(int fildes)
     int r = 0;
 
     if ((buf = malloc(sizeof(char) * 10)) == NULL){
-        perror("Memory allocation failed");
+        perror("Memory allocation failed\n");
         _exit(-1);
     }
 
@@ -27,7 +27,7 @@ char *readln(int fildes)
         if (load >= (size - 2)){ //-2 pq e para ter espaço para o \0 e \n
             size *= 2;
             if ((buf = realloc(buf, sizeof(char) * size)) == NULL){
-                perror("Memory reallocation failed");
+                perror("Memory reallocation failed\n");
                 _exit(-1);
             }
         }
@@ -73,30 +73,30 @@ void write_file(LIST list, int fd){
         
         if (get_comment(cm))
             if (write(fd, get_comment(cm), strlen(get_comment(cm))) == -1){
-                perror("Writing error");
+                perror("Writing error\n");
                 _exit(-1);
             }
 
         if (get_input(cm))
             if (write(fd, get_input(cm), strlen(get_input(cm))) == -1){
-                perror("Writing error");
+                perror("Writing error\n");
                 _exit(-1);
             }
 
         if (get_output(cm)){
 
             if (write(fd, ">>>\n", 4) == -1){
-                perror("Error writing on file");
+                perror("Error writing on file\n");
                 _exit(-1);
             }
 
             if (write(fd, get_output(cm), strlen(get_output(cm))) == -1){
-                perror("Error writing on file");
+                perror("Error writing on file\n");
                 _exit(-1);
             }
 
             if (write(fd, "<<<\n", 4) == -1){
-                perror("Error writing on file");
+                perror("Error writing on file\n");
                 _exit(-1);
             }
         }
@@ -114,7 +114,7 @@ char **strdivide(char *str){
     for (char *p = strtok(s, " "); p; p = strtok(NULL, " ")){
 
         if ((res = realloc(res, sizeof(char *) * (n_spaces + 1))) == NULL){
-            perror("Memory reallocation failed");
+            perror("Memory reallocation failed\n");
             _exit(-1);
         }
 
@@ -124,7 +124,7 @@ char **strdivide(char *str){
     res[n_spaces - 1] = strtok(res[n_spaces - 1], "\n");
     
     if ((res = realloc(res, sizeof(char *) * (n_spaces + 1))) == NULL){
-        perror("Memory reallocation failed");
+        perror("Memory reallocation failed\n");
         _exit(-1);
     }
 
@@ -145,7 +145,7 @@ void exec_command(char **token, int *ppi, int *ppo){
     close(ppo[0]);
 
     if (execvp(token[1], token + 1) == -1){
-        perror("Error executing command");
+        perror("Error executing command\n");
         _exit(-1);
     }
 
