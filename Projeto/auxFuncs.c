@@ -42,26 +42,15 @@ char *readln(int fildes)
 }
 
 COMMAND parser(char* buff){
-  
-  COMMAND cm=NULL;
-  int ref; 
-    
-    if(buff[0] == '$' ){
-    
-      if( isdigit(buff[1] - '0') && (buff[1] - '0') != 0){
-        ref = (buff[1] - '0');
-        cm = make_command(ref, buff, NULL, NULL);
-        }
-      
-      else
-        cm = make_command(0, buff, NULL, NULL);
-      }
-      
+  COMMAND cm=NULL; 
+    if(buff[0] == '$')
+        cm = make_command(atoi(buff+1),buff,NULL,NULL);
     if(buff[0]!='$' && strcmp(buff,">>>"))
         cm = make_command(0,NULL,NULL,buff);
     
   return cm;
 }
+
 
 char *str_dup(const char *s){
     if (s == NULL)

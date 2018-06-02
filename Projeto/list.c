@@ -59,7 +59,7 @@ int list_size(LIST l){
 	int size = 0;
 	
 	while(k != NULL){
-		if(k->command->input != NULL)
+		if(k->command->output != NULL)
 			size++;
 		k = k->next;
 	} 

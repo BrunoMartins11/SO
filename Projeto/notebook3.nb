@@ -7,6 +7,6 @@ $| head -1
 Este comando lista os processos:
 $ ps
 Agora podemos baralhar estes ficheiros:
-$| shuf
+$3| shuf
 E escolher as 3 primeiras linhas:
 $| head -3

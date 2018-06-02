@@ -92,25 +92,17 @@ int main(int argc, char const *argv[]){
 			int n=1;
 			
 			if(!isFirst){
-				
-				int pos = get_reference(list->command);
-				
-				if (write(pdi[1], out, strlen(out)) == -1){
-					perror("Writing error\n");
+				int pos = get_reference(list->command); // vai buscar o numero posiçao que queremos o output 
+				if(pos>list_size(fim)){
+					perror("comando em que input nao existe\n");
 					_exit(-1);
+				}	
+				if(pos!=0 && pos!=1 ){ //verifica se essa posiçao e maior que 0(nao tem numero) ou 1(comando extamente anterior)
+					out = get_pos_command_out(fim, pos);//vai buscar o output do comando que queremos
+					write(pdi[1], out, strlen(out));//devia escreve no file descriptor que vai ser lido como input do proximo comando a ser executado
 				}
-
-				if(list->command->reference > 1){
-					if(list->command->reference > list_size(list)){
-						perror("Command reference value is too high");
-						_exit(-1);
-					}
-
-					else{
-						out = get_pos_command_out(fim, pos);//vai buscar o output do comando que queremos
-					}
-				}
-				write(pdi[1], out, strlen(out));
+				else write(pdi[1], out, strlen(out));
+				
 			}
 
 			close(pdi[1]);
