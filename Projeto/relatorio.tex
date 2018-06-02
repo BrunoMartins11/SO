@@ -107,8 +107,8 @@ Márcio Sousa A82400
 \end{titlepage}
 
 \section{Introdução}
-Este projeto teve como objetivo criar um progrma em na linguagem de programação C que permitisse o processamento de \textbf{\textit{notebooks}}. Um \textbf{\textit{notebook}} é um ficheiro de texto que contém comentarios e comandos e que depois do seu processamento também contém o resultado dos comandos.
-O conteúdo do ficheiro, como referido anteriormente, contém um comando, que começa obrigatoriamente com o símbolo \textit{\$}, e o seu output está delimitado entre \textit{>>> <<<}. O \textbf{\textit{notebook}} também poderá ter nalguns casos um número logo após o símbolo \textit{\$} referente ao output do \textit{n} comando anterior que deverá ser um argumento do proximo comando a ser executado. 
+Este projeto teve como objetivo criar um programa na linguagem de programação C que permitisse o processamento de \textbf{\textit{notebooks}}. Um \textbf{\textit{notebook}} é um ficheiro de texto que contém comentários e comandos e que depois do seu processamento também contém o resultado dos comandos.
+O conteúdo do ficheiro, como referido anteriormente, contém um comando, que começa obrigatoriamente com o símbolo \textit{\$}, e o seu output está delimitado entre \textit{>>> <<<}. O \textbf{\textit{notebook}} também poderá ter nalguns casos um número logo após o símbolo \textit{\$} referente ao output do \textit{n} comando anterior que deverá ser um argumento do próximo comando a ser executado. 
 
 \section{Estruturas de Dados}
 
@@ -126,10 +126,10 @@ Para assegurar uma coneção entre todas as células \textit{COMMAND} foi utiliz
 \section{Execução}
 
 \subsection{Leitura e parsing do ficheiro}
-A execução do programa começa pela abertura do ficheiro passado como argumento com a \textit{system call} \textit{\textit{open}}, de seguida é lido o texto que lá está dentro linha a linha, um caracter de cada vez usando o \textit{\textit{read}}. Logo após ser finalizada a leitura da linha, o conteúdo dela é processada por uma função de \textit{parsing} que verifica se é um comando, um comentário, um  output e também o \textit{inteiro} a seguir ao \textit{\$} e insere no campo designado da estrutura \textit{COMMAND}.
+A execução do programa começa pela abertura do ficheiro passado como argumento com a \textit{system call} \textit{\textit{open}}, de seguida é lido o texto que lá está dentro, linha a linha, um caracter de cada vez usando o \textit{\textit{read}}. Logo após ser finalizada a leitura da linha, o conteúdo dela é processada por uma função de \textit{parsing} que verifica se é um comando, um comentário, um  output e também o \textit{inteiro} a seguir ao \textit{\$} e insere no campo designado da estrutura \textit{COMMAND}.
 
 \subsection{Execução de Comandos}
-No que toca à execução dos comandos propriamente dita, o programa cria dois pipes para que na criação de um processo filho que executa os comandos, este possa comunicar com o processo pai de forma a redirecionar inputs e outputs. Seguidamente é feito um \textit{\textit{fork}} que cria um processo filho e onde os comandos são executados usando \textit{\textit{execvp}}. Os outputs do comando sao redirecionados para um pipe anteriormente criado e guardados na respetiva posição da estrutura. Na eventualidade de um comando necessitar de um output que nao seja o imediatamente anterior a ele, é encontrado esse output e escrito no \textit{file descriptor} de onde o processo vai ler os argumentos para execução. Finalmente no fim de todo este processo os resultados sao guardados na estrutura.
+No que toca à execução dos comandos propriamente dita, o programa cria dois pipes, para que na criação de um processo filho que executa os comandos, este possa comunicar com o processo pai de forma a redirecionar inputs e outputs. Seguidamente é feito um \textit{\textit{fork}} que cria um processo filho e onde os comandos são executados usando \textit{\textit{execvp}}. Os outputs do comando são redirecionados para um pipe anteriormente criado e guardados na respetiva posição da estrutura. Na eventualidade de um comando necessitar de um output que não seja o imediatamente anterior a ele, é encontrado esse output e escrito no \textit{file descriptor} de onde o processo vai ler os argumentos para execução. Finalmente no fim de todo este processo os resultados são guardados na estrutura. No caso de ser necessário um output de um comando que não seja o imediatamente anterior, é percorrida a estrutura \textit{LIST} até ele ser encontrado e é escrito no pipe de onde o comando vai ler antes de executar.
 
 
 \subsection{Escrita no ficheiro}
