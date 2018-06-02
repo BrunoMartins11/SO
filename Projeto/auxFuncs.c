@@ -106,29 +106,30 @@ void write_file(LIST list, int fd){
 
 char **strdivide(char *str){
     char *s = str_dup(str);
-    int n_spaces;
+    int n;
     char **res = NULL;
+    char *p;
+    n = 0;
+    p = strtok(s, " ");
+    while(p){
 
-    n_spaces = 0;
-
-    for (char *p = strtok(s, " "); p; p = strtok(NULL, " ")){
-
-        if ((res = realloc(res, sizeof(char *) * (n_spaces + 1))) == NULL){
+        if ((res = realloc(res, sizeof(char *) * (n + 1))) == NULL){
             perror("Memory reallocation failed\n");
             _exit(-1);
         }
 
-        res[n_spaces++] = p;
+        res[n++] = str_dup(p);
+        p = strtok(NULL, " ");
     }
 
-    res[n_spaces - 1] = strtok(res[n_spaces - 1], "\n");
+    res[n- 1] = strtok(res[n - 1], "\n");
     
-    if ((res = realloc(res, sizeof(char *) * (n_spaces + 1))) == NULL){
+    if ((res = realloc(res, sizeof(char *) * (n + 1))) == NULL){
         perror("Memory reallocation failed\n");
         _exit(-1);
     }
 
-    res[n_spaces] = 0;
+    res[n] = 0;
     return res;
 }
 

@@ -1,4 +1,4 @@
-$ cat list.c
-$| grep int
+$ cat main.c
+$| grep a
 $| sort
-$| head -1
+$| head -10

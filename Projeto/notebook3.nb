@@ -4,9 +4,9 @@ Agora podemos ordenar estes ficheiros:
 $| shuf
 E escolher o primeiro:
 $| head -1
-Este comando lista os ficheiros:
+Este comando lista os processos:
 $ ps
-Agora podemos ordenar estes ficheiros:
-$| sort
-E escolher o primeiro:
-$| head -1
+Agora podemos baralhar estes ficheiros:
+$| shuf
+E escolher as 3 primeiras linhas:
+$| head -3

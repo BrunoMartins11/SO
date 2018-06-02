@@ -56,7 +56,6 @@ int main(int argc, char const *argv[]){
 	int isFirst=1;	
 
 	while(list!=NULL){
-		
 		int j;
 		
 		if(list->command->input){
@@ -132,8 +131,10 @@ int main(int argc, char const *argv[]){
 	write_file(fim,1);
 	//close(f);
 	free_list(fim);
-	free(buff);
-	free(out);
+	if(token){
+	for(int g=0; token[g]; g++) free(token[g]);
+	free(token);
+	}
 	free(buff);
 	return 0;
 }
