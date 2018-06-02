@@ -10,4 +10,5 @@ struct list{
 LIST add_node(LIST list, COMMAND cm);
 void free_list(LIST list);
 COMMAND get_command(LIST l);
+int list_size(LIST l);
 #endif

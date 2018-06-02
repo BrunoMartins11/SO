@@ -51,3 +51,18 @@ void free_list(LIST list){
 		
 	}
 }
+
+//retorna numero de comandos existentes na lista
+int list_size(LIST l){
+	
+	LIST k = l;
+	int size = 0;
+	
+	while(k != NULL){
+		if(k->command->input != NULL)
+			size++;
+		k = k->next;
+	} 
+
+	return size;
+}

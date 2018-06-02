@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
+#include <ctype.h>
 #include "auxFuncs.h"
 #include "list.h"
 #include "command.h"
@@ -40,16 +41,26 @@ char *readln(int fildes)
     return buf;
 }
 
-COMMAND parser(char *buff){
-    COMMAND cm = NULL;
-
-    if (buff[0] == '$')
-        cm = make_command(buff, NULL, NULL);
-
-    if (buff[0] != '$' && strcmp(buff, ">>>"))
-        cm = make_command(NULL, NULL, buff);
-
-    return cm;
+COMMAND parser(char* buff){
+  
+  COMMAND cm=NULL;
+  int ref; 
+    
+    if(buff[0] == '$' ){
+    
+      if( isdigit(buff[1] - '0') && (buff[1] - '0') != 0){
+        ref = (buff[1] - '0');
+        cm = make_command(ref, buff, NULL, NULL);
+        }
+      
+      else
+        cm = make_command(0, buff, NULL, NULL);
+      }
+      
+    if(buff[0]!='$' && strcmp(buff,">>>"))
+        cm = make_command(0,NULL,NULL,buff);
+    
+  return cm;
 }
 
 char *str_dup(const char *s){
@@ -151,4 +162,20 @@ void exec_command(char **token, int *ppi, int *ppo){
     }
 
     _exit(1);
+}
+
+
+char* get_pos_command_out(LIST l, int pos){//vai buscar o output que queremos
+    
+    int num_out = list_size(l) - pos;
+    int c = 0;
+    while(l && c != num_out){
+        if(get_output(l->command))
+            c++;
+        l=l->next;
+    }
+    while(l->command->comment)
+        l = l->next;
+    
+    return get_output(l->command);
 }

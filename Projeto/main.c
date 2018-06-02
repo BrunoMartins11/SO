@@ -83,7 +83,8 @@ int main(int argc, char const *argv[]){
 			}
 			
 			else if(j==0){
-				exec_command(token,pdi,pdo);	
+				exec_command(token,pdi,pdo);
+
 			}
 
 			close(pdo[1]);
@@ -91,10 +92,25 @@ int main(int argc, char const *argv[]){
 			int n=1;
 			
 			if(!isFirst){
+				
+				int pos = get_reference(list->command);
+				
 				if (write(pdi[1], out, strlen(out)) == -1){
 					perror("Writing error\n");
 					_exit(-1);
 				}
+
+				if(list->command->reference > 1){
+					if(list->command->reference > list_size(list)){
+						perror("Command reference value is too high");
+						_exit(-1);
+					}
+
+					else{
+						out = get_pos_command_out(fim, pos);//vai buscar o output do comando que queremos
+					}
+				}
+				write(pdi[1], out, strlen(out));
 			}
 
 			close(pdi[1]);

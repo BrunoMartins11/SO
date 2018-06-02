@@ -7,7 +7,7 @@
 
 
 
-COMMAND make_command(char* input, char* output, char* comment){
+COMMAND make_command(int ref, char* input, char* output, char* comment){
 
 	COMMAND cm;
 	if ((cm = malloc(sizeof(struct command))) == NULL){
@@ -15,6 +15,7 @@ COMMAND make_command(char* input, char* output, char* comment){
 		_exit(-1);
 	}
 	
+	cm->reference = ref;
 	cm->input = str_dup(input);
 	cm->output = str_dup(output);
 	cm->comment = str_dup(comment);
@@ -32,6 +33,10 @@ char* get_output(COMMAND cm){
 
 char* get_comment(COMMAND cm){
 	return cm->comment;
+}
+
+int get_reference(COMMAND cm){
+	return cm->reference;
 }
 
 void set_command_input(COMMAND cm, char* input){
