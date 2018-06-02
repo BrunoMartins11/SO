@@ -94,15 +94,20 @@ int main(int argc, char const *argv[]){
 			if(!isFirst){
 				int pos = get_reference(list->command); // vai buscar o numero posiçao que queremos o output 
 				if(pos>list_size(fim)){
-					perror("comando em que input nao existe\n");
+					perror("Reference number too high\n");
 					_exit(-1);
 				}	
 				if(pos!=0 && pos!=1 ){ //verifica se essa posiçao e maior que 0(nao tem numero) ou 1(comando extamente anterior)
 					out = get_pos_command_out(fim, pos);//vai buscar o output do comando que queremos
-					write(pdi[1], out, strlen(out));//devia escreve no file descriptor que vai ser lido como input do proximo comando a ser executado
+					if(write(pdi[1], out, strlen(out))==-1){//escreve no file descriptor que vai ser lido como input do proximo comando a ser executado
+						perror("Error writing");
+						_exit(-1);
+					}
 				}
-				else write(pdi[1], out, strlen(out));
-				
+				else if(write(pdi[1], out, strlen(out))==-1){
+						perror("Error writing");
+						_exit(-1);
+				}
 			}
 
 			close(pdi[1]);
