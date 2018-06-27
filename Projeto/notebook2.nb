@@ -53,7 +53,7 @@ list.c
 command.o
 <<<
 E escolher o primeiro:
-$| head -1
+$| cat long.nb
 >>>
 list.o
 <<<

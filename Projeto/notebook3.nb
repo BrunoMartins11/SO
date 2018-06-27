@@ -1,12 +1,12 @@
 Este comando lista os ficheiros:
 $ ls
 Agora podemos ordenar estes ficheiros:
-$| shuf
+$| bang 1
 E escolher o primeiro:
 $| head -1
 Este comando lista os processos:
 $ ps
 Agora podemos baralhar estes ficheiros:
-$3| shuf
+$| shuf
 E escolher as 3 primeiras linhas:
 $| head -3

@@ -21,7 +21,7 @@ notebook3.nb
 prog
 <<<
 Agora podemos ordenar estes ficheiros:
-$| sort
+$| sort -n -k 5
 >>>
 1.txt
 auxFuncs.c
